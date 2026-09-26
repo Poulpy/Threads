@@ -1,0 +1,51 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+sewing_machine:
+  name: Machine à coudre
+  category: sewing
+  description: Machine à coudre électronique pour travaux de couture courants.
+
+overlocker:
+  name: Surjeteuse
+  category: sewing
+  description: Surjeteuse quatre fils pour assemblage et finition des tissus.
+
+knitting_machine:
+  name: Machine à tricoter
+  category: knitting
+  description: Machine à tricoter manuelle pour ouvrages en maille.
+
+lace_pillow:
+  name: Coussin de dentellière
+  category: lace
+  description: Coussin cylindrique adapté à la dentelle aux fuseaux.
+
+bobbin_set:
+  name: Jeu de fuseaux
+  category: tatting
+  description: Jeu de fuseaux en bois pour la réalisation de dentelle.
+
+crochet_set:
+  name: Jeu de crochets
+  category: crochet
+  description: Ensemble de crochets de différentes tailles.
+
+loom:
+  name: Métier à tisser
+  category: other
+  description: Métier à tisser de table pour petits ouvrages.
+
+embroidery_hoop:
+  name: Tambour à broder
+  category: embroidery
+  description: Tambour en bois pour travaux de broderie.
+
+spinning_wheel:
+  name: Rouet
+  category: spinning
+  description: Rouet traditionnel pour le filage de la laine.
+
+embroidery_machine:
+  name: Machine à broder
+  category: embroidery
+  description: Machine à broder pour motifs textiles.

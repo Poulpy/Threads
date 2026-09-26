@@ -1,9 +1,19 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+paul:
+  name: Paul Repain
+  email: paul@example.com
 
-one:
-  name: MyString
-  email: MyString
+alice:
+  name: Alice Martin
+  email: alice@example.com
 
-two:
-  name: MyString
-  email: MyString
+claire:
+  name: Claire Dupont
+  email: claire@example.com
+
+marie:
+  name: Marie Leroy
+  email: marie@example.com
+
+julien:
+  name: Julien Bernard
+  email: julien@example.com

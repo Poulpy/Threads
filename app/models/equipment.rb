@@ -1,5 +1,7 @@
 class Equipment < ApplicationRecord
-  enum category: {
+  has_many :reservations
+
+  enum :category, {
     sewing:       0,
     knitting:     1,
     crochet:      2,
@@ -12,4 +14,7 @@ class Equipment < ApplicationRecord
     spinning:     9,
     felting:     10
   }
+
+  validates :category, presence: true
+  validates :name, presence: true
 end

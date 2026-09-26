@@ -1,4 +1,7 @@
 class Equipment < ApplicationRecord
+  class InvalidCategoryError < StandardError; end
+  class InvalidPageError < StandardError; end
+
   has_many :reservations
 
   enum :category, {
@@ -17,4 +20,6 @@ class Equipment < ApplicationRecord
 
   validates :category, presence: true
   validates :name, presence: true
+
+  scope :search_by_name, ->(term) { where("name ILIKE ?", "%#{sanitize_sql_like(term)}%") }
 end

@@ -31,7 +31,7 @@ class EquipmentsControllerTest < ActionDispatch::IntegrationTest
     get v1_equipments_url(page: 1), as: :json
     assert_response :success
     json = JSON.parse(response.body)
-    assert json.size, V1::EquipmentsController::LIMIT
+    assert json.size, V1::EquipmentsController::PAGE_SIZE
   end
 
   test "it should return an error on a negative page" do

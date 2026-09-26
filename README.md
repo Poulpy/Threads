@@ -22,3 +22,10 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+## Install
+
+```
+bundle
+rails db:seed
+```

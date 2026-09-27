@@ -33,3 +33,7 @@ curl -X GET http://localhost:3000/v1/equipments \
   -H "Content-Type: application/json" \
   -H 'Authorization: Bearer <YOUR_TOKEN>'
 ```
+
+## Generate the OpenAPI JSON file(s) for Swagger
+
+rake rswag:specs:swaggerize

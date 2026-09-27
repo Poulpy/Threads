@@ -36,4 +36,7 @@ curl -X GET http://localhost:3000/v1/equipments \
 
 ## Generate the OpenAPI JSON file(s) for Swagger
 
+```
 rake rswag:specs:swaggerize
+# Docs are at /api-docs
+```

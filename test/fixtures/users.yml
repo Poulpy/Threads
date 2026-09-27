@@ -1,19 +1,14 @@
 paul:
   name: Paul Repain
   email: paul@example.com
+  auth_token: paul-secret-token
 
 alice:
   name: Alice Martin
   email: alice@example.com
+  auth_token: alice-secret-token
 
 claire:
   name: Claire Dupont
   email: claire@example.com
-
-marie:
-  name: Marie Leroy
-  email: marie@example.com
-
-julien:
-  name: Julien Bernard
-  email: julien@example.com
+  auth_token: claire-secret-token

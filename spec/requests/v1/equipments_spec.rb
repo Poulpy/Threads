@@ -1,22 +1,22 @@
+# frozen_string_literal: true
+
 require 'swagger_helper'
 
 RSpec.describe 'v1/equipments', type: :request do
-
   path '/v1/equipments' do
-
     get('list equipment') do
       parameter name: 'category', in: :query, enum: {
-        sewing:       "sewing",
-        knitting:     "knitting",
-        crochet:      "crochet",
-        tatting:      "tatting",
-        lace:         "lace",
-        embroidery:   "embroidery",
-        cross_stitch: "cross_stitch",
-        weaving:      "weaving",
-        macrame:      "macrame",
-        spinning:     "spinning",
-        felting:     "felting"
+        sewing: 'sewing',
+        knitting: 'knitting',
+        crochet: 'crochet',
+        tatting: 'tatting',
+        lace: 'lace',
+        embroidery: 'embroidery',
+        cross_stitch: 'cross_stitch',
+        weaving: 'weaving',
+        macrame: 'macrame',
+        spinning: 'spinning',
+        felting: 'felting'
       }
 
       parameter name: 'page', in: :query, type: :integer
@@ -24,7 +24,6 @@ RSpec.describe 'v1/equipments', type: :request do
       parameter name: 'search', in: :query, type: :string
 
       response(200, 'successful') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {

@@ -1,16 +1,20 @@
-class V1::ApiController < ApplicationController
-  before_action :authenticate
+# frozen_string_literal: true
 
-  private
+module V1
+  class ApiController < ApplicationController
+    before_action :authenticate
 
-  attr_reader :current_user
+    private
 
-  def authenticate
-    token = request.authorization&.remove("Bearer ")
+    attr_reader :current_user
 
-    @current_user = User.find_by(auth_token: token)
-    unless token && current_user.present?
-      render json: { error: "Unauthorized" }, status: :unauthorized
+    def authenticate
+      token = request.authorization&.remove('Bearer ')
+
+      @current_user = User.find_by(auth_token: token)
+      return if token && current_user.present?
+
+      render json: { error: 'Unauthorized' }, status: :unauthorized
     end
   end
 end

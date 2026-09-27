@@ -1,50 +1,57 @@
-class V1::EquipmentsController < V1::ApiController
-  PAGE_SIZE = 3
+# frozen_string_literal: true
 
-  rescue_from Equipment::InvalidCategoryError, with: -> (e) { render json: { error: e.message }, status: :unprocessable_entity }
-  rescue_from Equipment::InvalidPageError, with: -> (e) { render json: { error: e.message }, status: :unprocessable_entity }
+module V1
+  class EquipmentsController < V1::ApiController
+    PAGE_SIZE = 3
 
-  def index
-    @equipments = Equipment.all
-    @equipments = filter_by_category(@equipments)
-    @equipments = filter_by_search(@equipments)
-    @equipments = sort_equipments(@equipments)
-    @equipments = paginate(@equipments)
+    rescue_from Equipment::InvalidCategoryError, with: ->(e) { render json: { error: e.message }, status: :unprocessable_entity }
+    rescue_from Equipment::InvalidPageError, with: ->(e) { render json: { error: e.message }, status: :unprocessable_entity }
 
-    render json: @equipments
-  end
+    def index
+      @equipments = Equipment.all
+      @equipments = filter_by_category(@equipments)
+      @equipments = filter_by_search(@equipments)
+      @equipments = sort_equipments(@equipments)
+      @equipments = paginate(@equipments)
 
-  def show
-    render json: Equipment.find(params[:id])
-  end
+      render json: @equipments
+    end
 
-  private
+    def show
+      render json: Equipment.find(params[:id])
+    end
 
-  def filter_by_category(scope)
-    return scope unless params[:category].present?
-    raise Equipment::InvalidCategoryError, "This category does not exist" unless Equipment.categories.key?(params[:category])
+    private
 
-    scope.where(category: params[:category])
-  end
+    def filter_by_category(scope)
+      return scope if params[:category].blank?
+      unless Equipment.categories.key?(params[:category])
+        raise Equipment::InvalidCategoryError,
+              'This category does not exist'
+      end
 
-  def filter_by_search(scope)
-    return scope unless params[:search].present?
+      scope.where(category: params[:category])
+    end
 
-    scope.search_by_name(params[:search])
-  end
+    def filter_by_search(scope)
+      return scope if params[:search].blank?
 
-  def sort_equipments(scope)
-    return scope unless params[:sort].present?
+      scope.search_by_name(params[:search])
+    end
 
-    params[:sort] == "desc" ? scope.order(name: :desc) : scope.order(name: :asc)
-  end
+    def sort_equipments(scope)
+      return scope if params[:sort].blank?
 
-  def paginate(scope)
-    return scope unless params[:page].present?
+      params[:sort] == 'desc' ? scope.order(name: :desc) : scope.order(name: :asc)
+    end
 
-    page = params[:page].to_i
-    raise Equipment::InvalidPageError, "Page must be positive" if page <= 0
+    def paginate(scope)
+      return scope if params[:page].blank?
 
-    scope.limit(PAGE_SIZE).offset((page - 1) * PAGE_SIZE)
+      page = params[:page].to_i
+      raise Equipment::InvalidPageError, 'Page must be positive' if page <= 0
+
+      scope.limit(PAGE_SIZE).offset((page - 1) * PAGE_SIZE)
+    end
   end
 end

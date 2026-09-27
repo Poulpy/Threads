@@ -1,7 +1,9 @@
-require "test_helper"
+# frozen_string_literal: true
+
+require 'test_helper'
 
 class EquipmentsControllerTest < ActionDispatch::IntegrationTest
-  test "it should return all equipments" do
+  test 'it should return all equipments' do
     equipment_count = Equipment.all.count
 
     get v1_equipments_url, headers: { Authorization: "Bearer #{users(:paul).auth_token}" }
@@ -11,7 +13,7 @@ class EquipmentsControllerTest < ActionDispatch::IntegrationTest
     assert json.size, equipment_count
   end
 
-  test "it should return all sewing equipment" do
+  test 'it should return all sewing equipment' do
     equipment_count = Equipment.where(category: :sewing).count
     get v1_equipments_url(category: :sewing), headers: { Authorization: "Bearer #{users(:paul).auth_token}" }
     json = JSON.parse(response.body)
@@ -20,29 +22,29 @@ class EquipmentsControllerTest < ActionDispatch::IntegrationTest
     assert json.size, equipment_count
   end
 
-  test "it should return an error on an unknown category" do
-    get v1_equipments_url(category: "machin"), headers: { Authorization: "Bearer #{users(:paul).auth_token}" }
+  test 'it should return an error on an unknown category' do
+    get v1_equipments_url(category: 'machin'), headers: { Authorization: "Bearer #{users(:paul).auth_token}" }
     assert_response :unprocessable_entity
     json = JSON.parse(response.body)
-    assert_equal "This category does not exist", json['error']
+    assert_equal 'This category does not exist', json['error']
   end
 
-  test "it should paginate" do
+  test 'it should paginate' do
     get v1_equipments_url(page: 1), headers: { Authorization: "Bearer #{users(:paul).auth_token}" }
     assert_response :success
     json = JSON.parse(response.body)
     assert json.size, V1::EquipmentsController::PAGE_SIZE
   end
 
-  test "it should return an error on a negative page" do
+  test 'it should return an error on a negative page' do
     get v1_equipments_url(page: -1), headers: { Authorization: "Bearer #{users(:paul).auth_token}" }
     assert_response :unprocessable_entity
     json = JSON.parse(response.body)
-    assert_equal "Page must be positive", json['error']
+    assert_equal 'Page must be positive', json['error']
   end
 
-  test "it should sort the equipements in reverse alphabetical order" do
-    get v1_equipments_url(sort: "desc"), headers: { Authorization: "Bearer #{users(:paul).auth_token}" }
+  test 'it should sort the equipements in reverse alphabetical order' do
+    get v1_equipments_url(sort: 'desc'), headers: { Authorization: "Bearer #{users(:paul).auth_token}" }
     assert_response :success
   end
 end

@@ -2,7 +2,7 @@ class Equipment < ApplicationRecord
   class InvalidCategoryError < StandardError; end
   class InvalidPageError < StandardError; end
 
-  has_many :reservations
+  has_many :reservations, dependent: :destroy
 
   enum :category, {
     sewing:       0,

@@ -7,6 +7,37 @@ paths:
   "/v1/equipments":
     get:
       summary: list equipment
+      parameters:
+      - name: category
+        in: query
+        enum:
+          sewing: sewing
+          knitting: knitting
+          crochet: crochet
+          tatting: tatting
+          lace: lace
+          embroidery: embroidery
+          cross_stitch: cross_stitch
+          weaving: weaving
+          macrame: macrame
+          spinning: spinning
+          felting: felting
+        description: ":\n * `sewing` sewing\n * `knitting` knitting\n * `crochet`
+          crochet\n * `tatting` tatting\n * `lace` lace\n * `embroidery` embroidery\n
+          * `cross_stitch` cross_stitch\n * `weaving` weaving\n * `macrame` macrame\n
+          * `spinning` spinning\n * `felting` felting\n "
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        schema:
+          type: string
+      - name: search
+        in: query
+        schema:
+          type: string
       responses:
         '200':
           description: successful

@@ -5,6 +5,24 @@ RSpec.describe 'v1/equipments', type: :request do
   path '/v1/equipments' do
 
     get('list equipment') do
+      parameter name: 'category', in: :query, enum: {
+        sewing:       "sewing",
+        knitting:     "knitting",
+        crochet:      "crochet",
+        tatting:      "tatting",
+        lace:         "lace",
+        embroidery:   "embroidery",
+        cross_stitch: "cross_stitch",
+        weaving:      "weaving",
+        macrame:      "macrame",
+        spinning:     "spinning",
+        felting:     "felting"
+      }
+
+      parameter name: 'page', in: :query, type: :integer
+      parameter name: 'sort', in: :query, type: :string
+      parameter name: 'search', in: :query, type: :string
+
       response(200, 'successful') do
 
         after do |example|

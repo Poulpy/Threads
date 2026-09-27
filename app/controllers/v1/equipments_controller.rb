@@ -1,4 +1,4 @@
-class V1::EquipmentsController < ApplicationController
+class V1::EquipmentsController < V1::ApiController
   PAGE_SIZE = 3
 
   rescue_from Equipment::InvalidCategoryError, with: -> (e) { render json: { error: e.message }, status: :unprocessable_entity }

@@ -40,3 +40,15 @@ curl -X GET http://localhost:3000/v1/equipments \
 rake rswag:specs:swaggerize
 # Docs are at /api-docs
 ```
+
+## Run Rubocop
+
+```
+rubocop --plugin rubocop-rails
+
+# Autocorrect
+rubocop --plugin rubocop-rails -a
+
+# Stronger speculative autocorrect
+rubocop --plugin rubocop-rails -A
+```

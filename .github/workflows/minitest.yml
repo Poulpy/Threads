@@ -14,5 +14,7 @@ jobs:
         with:
           ruby-version: '3.4.2'
       - run: bundle install
+      - run: rails db:create
+      - run: rails db:migrate
       - name: Mini test
         run: rails test

@@ -26,15 +26,15 @@ module V1
 
     def create
       reservation = Reservation.new(reservation_params)
-
       ActiveRecord::Base.transaction do
         if reservation.save
           render json: reservation, status: :created
         else
           render json: { error: reservation.errors }, status: :unprocessable_entity
         end
-      rescue
-        render json: { error: "Someone is trying to use the same equipment as you, aborting. Please retry." }, status: :conflict
+      rescue StandardError
+        render json: { error: 'Someone is trying to use the same equipment as you, aborting. Please retry.' },
+               status: :conflict
       end
     end
 

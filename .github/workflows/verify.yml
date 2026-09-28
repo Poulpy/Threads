@@ -17,6 +17,9 @@ jobs:
       - name: RuboCop
         run: rubocop
   test:
+    services: postgres
+      ports:
+        - "5432:5433"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

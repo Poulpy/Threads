@@ -24,6 +24,8 @@ class V1::ReservationsController < V1::ApiController
   def create
     reservation = Reservation.new(reservation_params)
 
+    #ActiveRecord::Base.transaction do
+
     if reservation.save
       render json: reservation, status: :created
     else

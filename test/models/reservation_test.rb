@@ -89,4 +89,72 @@ class ReservationTest < ActiveSupport::TestCase
     )
     assert_not(res1.save)
   end
+
+  test 'reservations can be consecutive with the same equipment' do
+    res1 = Reservation.new(
+      user: users(:paul),
+      equipment: equipments(:sewing_machine),
+      starts_at: DateTime.civil_from_format(:local, 2012, 12, 16, 10),
+      ends_at: DateTime.civil_from_format(:local, 2012, 12, 16, 12)
+    )
+
+    res2 = Reservation.new(
+      user: users(:paul),
+      equipment: equipments(:sewing_machine),
+      starts_at: DateTime.civil_from_format(:local, 2012, 12, 16, 12),
+      ends_at: DateTime.civil_from_format(:local, 2012, 12, 16, 14)
+    )
+
+    assert(res1.save)
+    assert(res2.save)
+  end
+
+  test 'reservations cannot overlap when second starts during first' do
+    res1 = Reservation.new(
+      user: users(:paul),
+      equipment: equipments(:sewing_machine),
+      starts_at: DateTime.civil_from_format(:local, 2012, 12, 16, 10),
+      ends_at: DateTime.civil_from_format(:local, 2012, 12, 16, 14)
+    )
+
+    res2 = Reservation.new(
+      user: users(:paul),
+      equipment: equipments(:sewing_machine),
+      starts_at: DateTime.civil_from_format(:local, 2012, 12, 16, 13),
+      ends_at: DateTime.civil_from_format(:local, 2012, 12, 16, 15)
+    )
+
+    assert(res1.save)
+    assert_not(res2.save)
+  end
+
+  test 'reservations cannot overlap when second contains first' do
+    res1 = Reservation.new(
+      user: users(:paul),
+      equipment: equipments(:sewing_machine),
+      starts_at: DateTime.civil_from_format(:local, 2012, 12, 16, 11),
+      ends_at: DateTime.civil_from_format(:local, 2012, 12, 16, 13)
+    )
+
+    res2 = Reservation.new(
+      user: users(:paul),
+      equipment: equipments(:sewing_machine),
+      starts_at: DateTime.civil_from_format(:local, 2012, 12, 16, 10),
+      ends_at: DateTime.civil_from_format(:local, 2012, 12, 16, 14)
+    )
+
+    assert(res1.save)
+    assert_not(res2.save)
+  end
+
+  test 'reservations cannot have the same start and end time' do
+    reservation = Reservation.new(
+      user: users(:paul),
+      equipment: equipments(:sewing_machine),
+      starts_at: DateTime.civil_from_format(:local, 2012, 12, 16, 10),
+      ends_at: DateTime.civil_from_format(:local, 2012, 12, 16, 10)
+    )
+
+    assert_not(reservation.save)
+  end
 end

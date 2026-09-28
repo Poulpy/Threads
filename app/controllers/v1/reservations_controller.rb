@@ -1,50 +1,54 @@
-class V1::ReservationsController < V1::ApiController
-  PAGE_SIZE = 5
+# frozen_string_literal: true
 
-  before_action :set_reservation, only: %i[show destroy]
+module V1
+  class ReservationsController < V1::ApiController
+    PAGE_SIZE = 5
 
-  def index
-    set_page
+    before_action :set_reservation, only: %i[show destroy]
 
-    reservations = @current_user.reservations
-                                .limit(PAGE_SIZE)
-                                .offset((@page - 1) * PAGE_SIZE)
+    def index
+      set_page
 
-    render json: reservations
-  end
+      reservations = @current_user.reservations
+                                  .limit(PAGE_SIZE)
+                                  .offset((@page - 1) * PAGE_SIZE)
 
-  def show
-    if @reservation.user_id.eql?(@current_user.id)
-      render json: @reservation
-    else
-      render json: { error: "Not allowed to see another person's reservation" }, status: :unauthorized
+      render json: reservations
     end
-  end
 
-  def create
-    reservation = Reservation.new(reservation_params)
-
-    #ActiveRecord::Base.transaction do
-
-    if reservation.save
-      render json: reservation, status: :created
-    else
-      render json: { error: reservation.errors }, status: :unprocessable_entity
+    def show
+      if @reservation.user_id.eql?(@current_user.id)
+        render json: @reservation
+      else
+        render json: { error: "Not allowed to see another person's reservation" }, status: :unauthorized
+      end
     end
-  end
 
-  def destroy
-    @reservation.destroy
-  end
+    def create
+      reservation = Reservation.new(reservation_params)
 
-  private
+      # ActiveRecord::Base.transaction do
+
+      if reservation.save
+        render json: reservation, status: :created
+      else
+        render json: { error: reservation.errors }, status: :unprocessable_entity
+      end
+    end
+
+    def destroy
+      @reservation.destroy
+    end
+
+    private
+
     def reservation_params
       params.expect(
-        reservation: [
-          :user_id,
-          :equipment_id,
-          :starts_at,
-          :ends_at
+        reservation: %i[
+          user_id
+          equipment_id
+          starts_at
+          ends_at
         ]
       )
     end
@@ -54,10 +58,11 @@ class V1::ReservationsController < V1::ApiController
     end
 
     def set_page
-      @page = if params[:page].present? && params[:page].to_i > 0
-        params[:page].to_i
-      else
-        1
-      end
+      @page = if params[:page].present? && params[:page].to_i.positive?
+                params[:page].to_i
+              else
+                1
+              end
     end
+  end
 end

@@ -94,15 +94,15 @@ class ReservationTest < ActiveSupport::TestCase
     res1 = Reservation.new(
       user: users(:paul),
       equipment: equipments(:sewing_machine),
-      starts_at: DateTime.civil_from_format(:local, 2012, 12, 16, 10),
-      ends_at: DateTime.civil_from_format(:local, 2012, 12, 16, 12)
+      starts_at: Time.zone.local(2012, 12, 16, 10),
+      ends_at: Time.zone.local(2012, 12, 16, 12)
     )
 
     res2 = Reservation.new(
       user: users(:paul),
       equipment: equipments(:sewing_machine),
-      starts_at: DateTime.civil_from_format(:local, 2012, 12, 16, 12),
-      ends_at: DateTime.civil_from_format(:local, 2012, 12, 16, 14)
+      starts_at: Time.zone.local(2012, 12, 16, 12),
+      ends_at: Time.zone.local(2012, 12, 16, 14)
     )
 
     assert(res1.save)

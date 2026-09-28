@@ -15,6 +15,7 @@ rails db:seed
 
 ```
 rails test
+rspec spec
 ```
 
 ## Usage
@@ -44,11 +45,11 @@ rake rswag:specs:swaggerize
 ## Run Rubocop
 
 ```
-rubocop --plugin rubocop-rails
+rubocop
 
 # Autocorrect
-rubocop --plugin rubocop-rails -a
+rubocop -a
 
 # Stronger speculative autocorrect
-rubocop --plugin rubocop-rails -A
+rubocop -A
 ```

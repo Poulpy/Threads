@@ -35,6 +35,12 @@ curl -X GET http://localhost:3000/v1/equipments \
   -H 'Authorization: Bearer <YOUR_TOKEN>'
 ```
 
+## Run docker container
+
+```
+docker compose up --build
+```
+
 ## Generate the OpenAPI JSON file(s) for Swagger
 
 ```

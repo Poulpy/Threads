@@ -62,3 +62,18 @@ equipments.each do |attrs|
 end
 
 Rails.logger.debug "#{Equipment.count} équipements en base."
+
+users = [
+  { name: 'Paul', email: 'paul@example.com' },
+  { name: 'Alice', email: 'alice@example.com' },
+  { name: 'Bob', email: 'bob@example.com' }
+]
+
+users.each do |attrs|
+  User.find_or_create_by!(email: attrs[:email]) do |user|
+    user.name = attrs[:name]
+    user.auth_token = SecureRandom.uuid
+  end
+end
+
+Rails.logger.debug "#{User.count} utilisateurs en base."

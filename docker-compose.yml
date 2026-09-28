@@ -1,0 +1,35 @@
+# docker-compose.yml
+services:
+  db:
+    image: postgres:17
+    command: postgres -p 5433
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: bash -c "rm -f tmp/pids/server.pid && bin/rails db:prepare && bin/rails s -p 3000 -b 0.0.0.0"
+    environment:
+      RAILS_ENV: development
+      PGHOST: db
+      PGUSER: postgres
+      PGPASSWORD: password
+      PGPORT: 5433
+    volumes:
+      - .:/rails
+    ports:
+      - "3000:3000"
+    depends_on:
+      - "db"
+
+volumes:
+  pgdata:

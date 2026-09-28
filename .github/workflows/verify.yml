@@ -1,0 +1,50 @@
+name: Audit
+
+on:
+  push:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4.2'
+      - run: bundle install
+      - name: RuboCop
+        run: rubocop
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4.2'
+      - run: bundle install
+      - run: rails db:create
+      - run: rails db:migrate
+      - name: Mini test
+        run: rails test
+
+  bundler-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4.2'
+      - run: gem install bundler-audit
+      - run: bundler-audit
+  brakeman:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4.2'
+      - run: bundle install
+      - run: brakeman
+

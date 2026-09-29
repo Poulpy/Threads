@@ -59,3 +59,46 @@ rubocop -a
 # Stronger speculative autocorrect
 rubocop -A
 ```
+
+## Vérifier GitHub Actions localement avec `act`
+
+[`act`](https://github.com/nektos/act) permet d'exécuter localement les workflows GitHub Actions à l'aide de Docker, sans avoir besoin de pousser un commit sur GitHub.
+
+### Installation
+
+macOS avec Homebrew :
+
+```bash
+brew install act
+```
+
+### Lister les workflows et jobs
+
+```bash
+act -l
+```
+
+### Tester un workflow
+
+Simuler un `push` :
+
+```bash
+act push
+```
+
+Tester uniquement un job :
+
+```bash
+act push -j test
+```
+
+```bash
+act push -j lint
+```
+
+### Faire uniquement une vérification à blanc
+
+```bash
+act -n
+```
+

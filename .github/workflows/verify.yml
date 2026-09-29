@@ -9,7 +9,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.4.2'
@@ -17,31 +17,30 @@ jobs:
       - name: RuboCop
         run: rubocop
   test:
+    runs-on: ubuntu-latest
     services:
       postgres:
-        # Docker Hub image
-        image: postgres
-        # Provide the password for postgres
+        image: postgres:16
         env:
           POSTGRES_PASSWORD: postgres
-        # Set health checks to wait until postgres has started
+        ports:
+          - 5433:5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-
-    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: postgres://postgres:postgres@localhost:5433/app_test
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.4.2'
-      - run: bundle install
-      - run: rails db:create
-      - run: rails db:migrate
-      - name: Mini test
-        run: rails test
+          bundler-cache: true
+      - run: bin/rails db:create db:schema:load
+      - run: bin/rails test
 
   bundler-audit:
     runs-on: ubuntu-latest

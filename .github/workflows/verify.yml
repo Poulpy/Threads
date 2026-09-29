@@ -41,7 +41,7 @@ jobs:
           bundler-cache: true
       - run: bin/rails db:create db:schema:load
       - run: bin/rails test
-      - run: rspec spec
+      - run: bundle exec rspec spec
 
   bundler-audit:
     runs-on: ubuntu-latest

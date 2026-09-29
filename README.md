@@ -20,7 +20,7 @@ rspec spec
 
 ## Usage
 
-Authentification is by bearer token.
+Authentification is by bearer token. Authentication is intentionally simplified for this exercise and is not suitable for production.
 
 ```
 rails s

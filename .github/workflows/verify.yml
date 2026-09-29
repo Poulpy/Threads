@@ -41,12 +41,12 @@ jobs:
           bundler-cache: true
       - run: bin/rails db:create db:schema:load
       - run: bin/rails test
-      - run: bin/rspec spec
+      - run: rspec spec
 
   bundler-audit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.4.2'
@@ -55,7 +55,7 @@ jobs:
   brakeman:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.4.2'

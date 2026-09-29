@@ -63,7 +63,7 @@ module V1
     end
 
     def set_reservation
-      @reservation = Reservation.find(params[:id])
+      @reservation = @current_user.reservations.find(params[:id])
     end
 
     def set_page

@@ -12,8 +12,8 @@ RSpec.describe 'v1/reservations', type: :request do
       reservation: {
         user_id: users(:paul).id,
         equipment_id: equipments(:sewing_machine).id,
-        starts_at: Time.zone.local(2016, 10, 5, 9, 0),
-        ends_at: Time.zone.local(2016, 10, 5, 12, 0)
+        starts_at: Time.zone.local(2316, 10, 5, 9, 0),
+        ends_at: Time.zone.local(2316, 10, 5, 12, 0)
       }
     }
   end
@@ -37,7 +37,7 @@ RSpec.describe 'v1/reservations', type: :request do
 
     it "does not allow to see another's reservation" do
       get "/v1/reservations/#{reservations(:alice_sewing).id}", headers: auth_header
-      expect(response).to have_http_status(:unauthorized)
+      expect(response).to have_http_status(:not_found)
     end
 
     it 'does return not found on fictive id' do

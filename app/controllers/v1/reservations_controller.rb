@@ -26,6 +26,7 @@ module V1
 
     def create
       reservation = Reservation.new(reservation_params)
+      reservation.user_id = @current_user.id
       ActiveRecord::Base.transaction do
         if reservation.save
           render json: reservation, status: :created
@@ -47,7 +48,6 @@ module V1
     def reservation_params
       params.expect(
         reservation: %i[
-          user_id
           equipment_id
           starts_at
           ends_at

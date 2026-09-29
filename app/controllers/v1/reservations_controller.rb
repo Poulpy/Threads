@@ -40,7 +40,11 @@ module V1
     end
 
     def destroy
-      @reservation.destroy
+      if @reservation.user_id == @current_user.id
+        @reservation.destroy
+      else
+        render json: { error: "Not allowed to destroy another person's reservation" }, status: :unauthorized
+      end
     end
 
     private

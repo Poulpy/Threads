@@ -25,18 +25,17 @@ module V1
     end
 
     def create
-      reservation = Reservation.new(reservation_params)
-      reservation.user_id = @current_user.id
-      ActiveRecord::Base.transaction do
-        if reservation.save
-          render json: reservation, status: :created
-        else
-          render json: { error: reservation.errors }, status: :unprocessable_entity
-        end
-      rescue StandardError
-        render json: { error: 'Someone is trying to use the same equipment as you, aborting. Please retry.' },
-               status: :conflict
-      end
+      reservation = ReservationCreator.new(reservation_params, current_user).call
+
+      render json: reservation, status: :created
+    rescue ActiveRecord::RecordInvalid => e
+      render json: { error: e.record.errors }, status: :unprocessable_entity
+    rescue ActiveRecord::LockWaitTimeout
+      render json: { error: "Equipment is currently being reserved" }, status: :conflict
+    rescue ActiveRecord::StatementInvalid => e
+      raise unless e.cause.is_a?(PG::LockNotAvailable)
+
+      render json: { error: "Equipment is currently being reserved" }, status: :conflict
     end
 
     def destroy

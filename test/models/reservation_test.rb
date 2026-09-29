@@ -7,8 +7,8 @@ class ReservationTest < ActiveSupport::TestCase
     res = Reservation.new(
       user: users(:paul),
       equipment: equipments(:sewing_machine),
-      starts_at: DateTime.civil_from_format(:local, 2012, 12, 17),
-      ends_at: DateTime.civil_from_format(:local, 2012, 12, 16)
+      starts_at: DateTime.civil_from_format(:local, 2312, 12, 17),
+      ends_at: DateTime.civil_from_format(:local, 2312, 12, 16)
     )
 
     assert_not(res.save)
@@ -18,15 +18,15 @@ class ReservationTest < ActiveSupport::TestCase
     res1 = Reservation.new(
       user: users(:paul),
       equipment: equipments(:sewing_machine),
-      starts_at: DateTime.civil_from_format(:local, 2012, 12, 16),
-      ends_at: DateTime.civil_from_format(:local, 2012, 12, 20)
+      starts_at: DateTime.civil_from_format(:local, 2312, 12, 16),
+      ends_at: DateTime.civil_from_format(:local, 2312, 12, 20)
     )
 
     res2 = Reservation.new(
       user: users(:paul),
       equipment: equipments(:sewing_machine),
-      starts_at: DateTime.civil_from_format(:local, 2012, 12, 19),
-      ends_at: DateTime.civil_from_format(:local, 2012, 12, 22)
+      starts_at: DateTime.civil_from_format(:local, 2312, 12, 19),
+      ends_at: DateTime.civil_from_format(:local, 2312, 12, 22)
     )
     assert(res1.save)
     assert_not(res2.save)
@@ -36,15 +36,15 @@ class ReservationTest < ActiveSupport::TestCase
     res1 = Reservation.new(
       user: users(:paul),
       equipment: equipments(:sewing_machine),
-      starts_at: DateTime.civil_from_format(:local, 2012, 12, 16),
-      ends_at: DateTime.civil_from_format(:local, 2012, 12, 20)
+      starts_at: DateTime.civil_from_format(:local, 2312, 12, 16),
+      ends_at: DateTime.civil_from_format(:local, 2312, 12, 20)
     )
 
     res2 = Reservation.new(
       user: users(:paul),
       equipment: equipments(:knitting_machine),
-      starts_at: DateTime.civil_from_format(:local, 2012, 12, 19),
-      ends_at: DateTime.civil_from_format(:local, 2012, 12, 22)
+      starts_at: DateTime.civil_from_format(:local, 2312, 12, 19),
+      ends_at: DateTime.civil_from_format(:local, 2312, 12, 22)
     )
     assert(res1.save)
     assert(res2.save)
@@ -54,8 +54,8 @@ class ReservationTest < ActiveSupport::TestCase
     res1 = Reservation.new(
       user: users(:paul),
       equipment: nil,
-      starts_at: DateTime.civil_from_format(:local, 2012, 12, 19),
-      ends_at: DateTime.civil_from_format(:local, 2012, 12, 22)
+      starts_at: DateTime.civil_from_format(:local, 2312, 12, 19),
+      ends_at: DateTime.civil_from_format(:local, 2312, 12, 22)
     )
     assert_not(res1.save)
   end
@@ -64,8 +64,8 @@ class ReservationTest < ActiveSupport::TestCase
     res1 = Reservation.new(
       user: nil,
       equipment: equipments(:sewing_machine),
-      starts_at: DateTime.civil_from_format(:local, 2012, 12, 19),
-      ends_at: DateTime.civil_from_format(:local, 2012, 12, 22)
+      starts_at: DateTime.civil_from_format(:local, 2312, 12, 19),
+      ends_at: DateTime.civil_from_format(:local, 2312, 12, 22)
     )
     assert_not(res1.save)
   end
@@ -75,7 +75,7 @@ class ReservationTest < ActiveSupport::TestCase
       user: users(:paul),
       equipment: equipments(:sewing_machine),
       starts_at: nil,
-      ends_at: DateTime.civil_from_format(:local, 2012, 12, 22)
+      ends_at: DateTime.civil_from_format(:local, 2312, 12, 22)
     )
     assert_not(res1.save)
   end
@@ -84,7 +84,7 @@ class ReservationTest < ActiveSupport::TestCase
     res1 = Reservation.new(
       user: users(:paul),
       equipment: equipments(:sewing_machine),
-      starts_at: DateTime.civil_from_format(:local, 2012, 12, 19),
+      starts_at: DateTime.civil_from_format(:local, 2312, 12, 19),
       ends_at: nil
     )
     assert_not(res1.save)
@@ -94,15 +94,15 @@ class ReservationTest < ActiveSupport::TestCase
     res1 = Reservation.new(
       user: users(:paul),
       equipment: equipments(:sewing_machine),
-      starts_at: Time.zone.local(2012, 12, 16, 10),
-      ends_at: Time.zone.local(2012, 12, 16, 12)
+      starts_at: Time.zone.local(2312, 12, 16, 10),
+      ends_at: Time.zone.local(2312, 12, 16, 12)
     )
 
     res2 = Reservation.new(
       user: users(:paul),
       equipment: equipments(:sewing_machine),
-      starts_at: Time.zone.local(2012, 12, 16, 12),
-      ends_at: Time.zone.local(2012, 12, 16, 14)
+      starts_at: Time.zone.local(2312, 12, 16, 12),
+      ends_at: Time.zone.local(2312, 12, 16, 14)
     )
 
     assert(res1.save)
@@ -113,15 +113,15 @@ class ReservationTest < ActiveSupport::TestCase
     res1 = Reservation.new(
       user: users(:paul),
       equipment: equipments(:sewing_machine),
-      starts_at: DateTime.civil_from_format(:local, 2012, 12, 16, 10),
-      ends_at: DateTime.civil_from_format(:local, 2012, 12, 16, 14)
+      starts_at: DateTime.civil_from_format(:local, 2312, 12, 16, 10),
+      ends_at: DateTime.civil_from_format(:local, 2312, 12, 16, 14)
     )
 
     res2 = Reservation.new(
       user: users(:paul),
       equipment: equipments(:sewing_machine),
-      starts_at: DateTime.civil_from_format(:local, 2012, 12, 16, 13),
-      ends_at: DateTime.civil_from_format(:local, 2012, 12, 16, 15)
+      starts_at: DateTime.civil_from_format(:local, 2312, 12, 16, 13),
+      ends_at: DateTime.civil_from_format(:local, 2312, 12, 16, 15)
     )
 
     assert(res1.save)
@@ -132,15 +132,15 @@ class ReservationTest < ActiveSupport::TestCase
     res1 = Reservation.new(
       user: users(:paul),
       equipment: equipments(:sewing_machine),
-      starts_at: DateTime.civil_from_format(:local, 2012, 12, 16, 11),
-      ends_at: DateTime.civil_from_format(:local, 2012, 12, 16, 13)
+      starts_at: DateTime.civil_from_format(:local, 2312, 12, 16, 11),
+      ends_at: DateTime.civil_from_format(:local, 2312, 12, 16, 13)
     )
 
     res2 = Reservation.new(
       user: users(:paul),
       equipment: equipments(:sewing_machine),
-      starts_at: DateTime.civil_from_format(:local, 2012, 12, 16, 10),
-      ends_at: DateTime.civil_from_format(:local, 2012, 12, 16, 14)
+      starts_at: DateTime.civil_from_format(:local, 2312, 12, 16, 10),
+      ends_at: DateTime.civil_from_format(:local, 2312, 12, 16, 14)
     )
 
     assert(res1.save)
@@ -151,8 +151,19 @@ class ReservationTest < ActiveSupport::TestCase
     reservation = Reservation.new(
       user: users(:paul),
       equipment: equipments(:sewing_machine),
-      starts_at: DateTime.civil_from_format(:local, 2012, 12, 16, 10),
-      ends_at: DateTime.civil_from_format(:local, 2012, 12, 16, 10)
+      starts_at: DateTime.civil_from_format(:local, 2312, 12, 16, 10),
+      ends_at: DateTime.civil_from_format(:local, 2312, 12, 16, 10)
+    )
+
+    assert_not(reservation.save)
+  end
+
+  test 'reservation cannot be in the past' do
+    reservation = Reservation.new(
+      user: users(:paul),
+      equipment: equipments(:sewing_machine),
+      starts_at: Time.zone.local(2012, 12, 16, 10),
+      ends_at: Time.zone.local(2012, 12, 16, 10)
     )
 
     assert_not(reservation.save)

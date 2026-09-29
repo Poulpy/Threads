@@ -41,7 +41,11 @@ module V1
 
     def destroy
       if @reservation.user_id == @current_user.id
-        @reservation.destroy
+        if @reservation.starts_at < Time.zone.now
+          render json: { error: "Not allowed to destroy a past reservation or ongoing" }, status: :unprocessable_entity
+        else
+          @reservation.destroy
+        end
       else
         render json: { error: "Not allowed to destroy another person's reservation" }, status: :not_found
       end

@@ -31,17 +31,17 @@ module V1
     rescue ActiveRecord::RecordInvalid => e
       render json: { error: e.record.errors }, status: :unprocessable_entity
     rescue ActiveRecord::LockWaitTimeout
-      render json: { error: "Equipment is currently being reserved" }, status: :conflict
+      render json: { error: 'Equipment is currently being reserved' }, status: :conflict
     rescue ActiveRecord::StatementInvalid => e
       raise unless e.cause.is_a?(PG::LockNotAvailable)
 
-      render json: { error: "Equipment is currently being reserved" }, status: :conflict
+      render json: { error: 'Equipment is currently being reserved' }, status: :conflict
     end
 
     def destroy
       if @reservation.user_id == @current_user.id
         if @reservation.starts_at < Time.zone.now
-          render json: { error: "Not allowed to destroy a past reservation or ongoing" }, status: :unprocessable_entity
+          render json: { error: 'Not allowed to destroy a past reservation or ongoing' }, status: :unprocessable_entity
         else
           @reservation.destroy
         end

@@ -2,12 +2,15 @@
 
 class DateOverlapValidator < ActiveModel::Validator
   def validate(record)
-    equipment_reservations = Reservation.where(equipment_id: record.equipment_id)
+    return if record.starts_at.blank? || record.ends_at.blank?
 
-    equipment_reservations.each do |reservation|
-      if (reservation.starts_at...reservation.ends_at).overlap?(record.starts_at...record.ends_at)
-        record.errors.add :starts_at, 'should not overlap with other reservations'
-      end
-    end
+    overlapping = Reservation
+                  .where(equipment_id: record.equipment_id)
+                  .where.not(id: record.id)
+                  .where('starts_at < ? AND ends_at > ?', record.ends_at, record.starts_at)
+
+    return unless overlapping.exists?
+
+    record.errors.add(:starts_at, :overlap)
   end
 end

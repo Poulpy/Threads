@@ -20,7 +20,7 @@ module V1
       if @reservation.user_id.eql?(@current_user.id)
         render json: @reservation
       else
-        render json: { error: "Not allowed to see another person's reservation" }, status: :unauthorized
+        render json: { error: "Not allowed to see another person's reservation" }, status: :not_found
       end
     end
 
@@ -43,7 +43,7 @@ module V1
       if @reservation.user_id == @current_user.id
         @reservation.destroy
       else
-        render json: { error: "Not allowed to destroy another person's reservation" }, status: :unauthorized
+        render json: { error: "Not allowed to destroy another person's reservation" }, status: :not_found
       end
     end
 

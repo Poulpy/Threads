@@ -51,6 +51,44 @@ RSpec.describe 'v1/reservations', type: :request do
       post '/v1/reservations', params: valid_params, headers: auth_header
       expect(response).to have_http_status(:created)
     end
+
+    context 'when the equipment is already locked' do
+      self.use_transactional_tests = false
+
+      let(:user)      { users(:paul) }
+      let(:params)    { valid_params[:reservation] }
+      let(:equipment) { Equipment.find(params[:equipment_id]) }
+
+      def create_reservation_from_another_connection
+        thread = Thread.new do
+          Thread.current.report_on_exception = false
+          ActiveRecord::Base.connection_pool.with_connection do
+            ReservationCreator.new(params, user).call
+          end
+        end
+        thread.join
+      end
+
+      it 'raises a lock error' do
+        equipment.with_lock do
+          expect { create_reservation_from_another_connection }
+            .to raise_error ActiveRecord::LockWaitTimeout
+        end
+      end
+
+      def attempt_while_locked
+        equipment.with_lock do
+          create_reservation_from_another_connection
+        rescue ActiveRecord::LockWaitTimeout
+          nil
+        end
+      end
+
+      it 'does not create a reservation' do
+        expect { attempt_while_locked }
+          .not_to(change { Reservation.where(equipment_id: equipment.id).count })
+      end
+    end
   end
 
   describe 'DELETE /destroy' do
